@@ -1,25 +1,15 @@
 package config
 
-import (
-	"io"
-	"time"
-)
+const defaultEnvFile = ".env"
 
-type Environment string
+type Option func(*options)
 
-const (
-	Local       Environment = "local"
-	Development Environment = "development"
-	Production  Environment = "production"
-)
-
-type InitParams struct {
-	Environment Environment
-	Watcher     WatcherParams
+type options struct {
+	filePath string
 }
 
-type WatcherParams struct {
-	IsEnabled bool
-	Logger    io.Writer
-	Interval  time.Duration
+func WithPath(path string) Option {
+	return func(o *options) {
+		o.filePath = path
+	}
 }
